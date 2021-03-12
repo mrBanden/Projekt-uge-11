@@ -4,12 +4,12 @@ extends layout
 block content
         h1= title
         p Welcome to #{title}
-        if userarr  
+        if booksarr  
                 table()
                   tr  
-                        th User 
-                        th Password
-                        each user in userarr
+                        th Title
+                        th ISBN
+                        each book in booksarr
                             tr
                                     td #{}
                                     td #{}  
