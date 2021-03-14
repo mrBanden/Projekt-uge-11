@@ -1,7 +1,63 @@
 extends layout
 // Benytter vores layout.pug template
+extends layout
 
 block content
+	h1= title
+	p Please register your new book
+	form(id='regbook' action='/books/regbooks' method='post')
+		table
+			tr
+				td title 
+				td
+					input(type='text' name='title' required)
+			tr
+				td id 
+				td
+					input(type='text' name='id' required)
+                        tr
+				td edition
+				td
+					input(type='text' name='edition' required)
+                        tr
+				td copyright
+				td
+					input(type='text' name='copyright' required)
+                        tr
+				td publisher  
+				td
+					input(type='text' name='publisher' required)
+                        tr
+				td year published   
+				td
+					input(type='text' name='year' required)
+                        tr
+				td publisher place   
+				td
+					input(type='text' name='place' required)
+                        tr
+				td author firstname 
+				td
+					input(type='text' name='firstname' required)
+                        tr
+				td author middlename 
+				td
+					input(type='text' name='middlename')
+                        tr
+				td author lastname
+				td
+					input(type='number' name='author' required)
+			tr
+                                td bookcopies  
+				td
+					input(type='text' name='password' required)
+			tr
+				td
+				td
+					input(type='submit' value='Go')
+
+
+//block content
         h1= title
         p Welcome to #{title}
         if booksarr  
