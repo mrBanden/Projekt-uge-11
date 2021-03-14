@@ -1,7 +1,6 @@
 "use strict";
 
 const mongoose = require('mongoose');
-// const mod1 = require('./mod');
 
 const bookSchema = mongoose.Schema ({
     publisher: String,
@@ -10,7 +9,5 @@ const bookSchema = mongoose.Schema ({
     id: Number,
     edition: String
 });
-const Book = mongoose.model('Book', bookSchema, 'book');
 
-
-module.exports = mongoose.model('Book', bookSchema)
+module.exports = mongoose.model("Book", bookSchema, 'book')
