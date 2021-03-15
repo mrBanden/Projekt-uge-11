@@ -1,6 +1,6 @@
 "use strict";
 const mon = require("./mongooseWrap");
-const Books = require("./booksschema");
+const Book = require("./booksschema");
 const dbServer = "localhost";
 const dbName = "library";
 
@@ -8,7 +8,7 @@ exports.getBooks = async function (que, sort) {
     if (sort === null)
         sort = {sort: {name: 1}};
     try {
-        let cs = await mon.retrieve(dbServer, dbName, Books, que, sort);
+        let cs = await mon.retrieve(dbServer, dbName, Book, que, sort);
         return cs;
     } catch (e) {
         console.log(e);
@@ -32,7 +32,7 @@ exports.postBooks = async function (req) {
     
     //if (req.body.localname === "") book.localname = book.name;
     try {
-        let cs = await mon.upsert("localhost", "library", book, Books, chk);
+        let cs = await mon.upsert("localhost", "library", Book, book, chk);
         return;
     } catch (e) {
         console.log(e);
