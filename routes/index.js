@@ -20,7 +20,11 @@ router.get('/bookform', function(req, res, next) {
 
 router.post('/bookform', function(req, res, next) {
   handlebooks.postBooks(req, res, next);
-  res.redirect('/');
+  res.redirect('/showbooks');
+});
+
+router.post('/showbooks', async function(req, res, next) {
+  let books = await handlebooks.getBooks();
 });
 
 module.exports = router;
