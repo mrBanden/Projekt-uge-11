@@ -3,6 +3,7 @@ var router = express.Router();
 const TITLE = 'Library Project';
 const handlebooks = require('../models/handleBooks');
 const handleuser = require('../models/handleUser');
+const handlebookcopies = require('../models/handlebookcopies');
 // Require til handler
 
 /* GET home page. */
@@ -44,6 +45,25 @@ router.get('/userform', function(req, res, next) {
 router.post('/userform', function(req, res, next) {
   handleuser.postUsers(req, res, next);
   res.redirect('/showuser');
+});
+
+//Bookcopies
+router.get('/showbookcopies', async function(req, res, next) {
+  let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
+  res.render('showbookcopies', { title: TITLE, subtitle: 'Display Copies', bookcopies});
+});
+
+router.post('/showbookcopies', async function(req, res, next) {
+  let bookcopies = await handlebookcopies.getBookcopies();
+});
+
+router.get('/bookcopiesform', function(req, res, next) {
+  res.render('bookcopiesform', {title: TITLE, subtitle: 'Bookcopies form' });
+});
+
+router.post('/bookcopiesform', function(req, res, next) {
+  handlebookcopies.postBookcopies(req, res, next);
+  res.redirect('/showbookcopies');
 });
 module.exports = router;
 

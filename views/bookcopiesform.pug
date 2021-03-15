@@ -2,17 +2,18 @@ extends layout
 
 block content
 	h1= title
-	p Please register your new book
-	form(id='regbook' action='/bookcopiesform' method='post')
+	p Please write in the book id 
+	form(id='reguser' action='/bookcopiesform' method='post')
 		table
-            select
-                each id in books
-                    option(value=books.id) #{books.id}
 			tr
-				td id 
+				td Bookid
 				td
-					input(type='number' name='' required)
-            tr
+					input(type='text' name='id' required)
+			tr
+				td Id
+				td
+					input(type='text' name='password' required)
+			tr
 				td
 				td
 					input(type='submit' value='Go')

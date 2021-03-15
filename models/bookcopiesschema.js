@@ -7,4 +7,4 @@ const bookcopiesSchema = mongoose.Schema ({
     id: Number
 });
 
-module.exports = mongoose.model("Bookcopies", bookcopiesSchema, 'bookscopies') //books refererer til en collection i databasen 
+module.exports = mongoose.model("Bookcopies", bookcopiesSchema, 'bookcopies') //books refererer til en collection i databasen 
