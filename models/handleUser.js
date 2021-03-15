@@ -5,7 +5,7 @@ const User = require("./usersschema");
 const dbServer ='localhost';
 const dbName = "library";
 
-exports.getBooks = async function (que, sort) {
+exports.getUsers = async function (que, sort) {
     if (sort === null)
         sort = {sort: {name: 1}};
     try {
@@ -16,7 +16,7 @@ exports.getBooks = async function (que, sort) {
     }
 }
 
-exports.postUser = async function (req) {
+exports.postUsers = async function (req) {
     let chk = { id: req.body.id };  // check object for existence
     let user = new User({                     // create object in db-format
         id: req.body.id,

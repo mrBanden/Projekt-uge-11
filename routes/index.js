@@ -2,7 +2,8 @@ var express = require('express');
 var router = express.Router();
 const TITLE = 'Library Project';
 const handlebooks = require('../models/handleBooks');
-//require til handler
+const handleuser = require('../models/handleUser');
+// Require til handler
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -27,6 +28,23 @@ router.post('/showbooks', async function(req, res, next) {
   let books = await handlebooks.getBooks();
 });
 
+router.get('/showuser', async function(req, res, next) {
+  let users = await handleuser.getUsers({}, {sort: {title: 1}});
+  res.render('showuser', { title: TITLE, subtitle: 'Display User', users });
+});
+
+router.post('/showuser', async function(req, res, next) {
+  let users = await handleuser.getUsers();
+});
+
+router.get('/userform', function(req, res, next) {
+  res.render('userform', {title: TITLE, subtitle: 'User form' });
+});
+
+router.post('/userform', function(req, res, next) {
+  handleuser.postUsers(req, res, next);
+  res.redirect('/showuser');
+});
 module.exports = router;
 
 /*router.post('/books', async function(req, res, next) {

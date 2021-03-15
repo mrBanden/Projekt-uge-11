@@ -3,13 +3,12 @@ extends layout
 block content
 	h1= title
 	p Please register
-	form(id='reguser' action='/users/reguser' method='post')
+	form(id='reguser' action='/userform' method='post')
 		table
 			tr
 				td UserId
 				td
 					input(type='text' name='id' required)
-
 			tr
 				td Password
 				td

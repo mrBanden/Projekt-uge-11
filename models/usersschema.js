@@ -14,4 +14,4 @@ const userSchema = mongoose.Schema({
     newsletter: String
 })
 
-module.exports = mongoose.model("User", userSchema, 'user');
+module.exports = mongoose.model("User", userSchema, 'persons');

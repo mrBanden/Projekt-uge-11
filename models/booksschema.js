@@ -11,4 +11,4 @@ const bookSchema = mongoose.Schema ({
     copyright: String
 });
 
-module.exports = mongoose.model("Book", bookSchema, 'books')
+module.exports = mongoose.model("Book", bookSchema, 'books') //books refererer til en collection i databasen 

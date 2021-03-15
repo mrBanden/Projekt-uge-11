@@ -32,7 +32,7 @@ exports.postBooks = async function (req) {
     
     //if (req.body.localname === "") book.localname = book.name;
     try {
-        let cs = await mon.upsert("localhost", "library", Book, book, chk);
+        let cs = await mon.upsert("localhost", "library", Book, book, chk); //Ikke fjern book, den smider vores bøger i databasen
         return;
     } catch (e) {
         console.log(e);
