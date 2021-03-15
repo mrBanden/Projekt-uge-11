@@ -1,8 +1,6 @@
 "use strict";
 
 const mongoose = require('mongoose');
-mongoose.set('debug', true);
-mongoose.set('debug', {color: false});
 
 const bookSchema = mongoose.Schema ({
     published: [{publisher: String, year: Number, place: String}],
@@ -13,4 +11,4 @@ const bookSchema = mongoose.Schema ({
     copyright: String
 });
 
-module.exports = mongoose.model("Book", bookSchema, 'book')
+module.exports = mongoose.model("Book", bookSchema, 'books')
