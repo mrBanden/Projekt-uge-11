@@ -1,0 +1,18 @@
+extends layout
+
+block content
+	h1= title
+	p Please register your new book
+	form(id='regbook' action='/bookcopiesform' method='post')
+		table
+            select
+                each id in books
+                    option(value=books.id) #{books.id}
+			tr
+				td id 
+				td
+					input(type='number' name='' required)
+            tr
+				td
+				td
+					input(type='submit' value='Go')
