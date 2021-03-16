@@ -6,10 +6,18 @@ const handleuser = require('../models/handleUser');
 const handlebookcopies = require('../models/handlebookcopies');
 // Require til handler
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+//Get home page
+
+router.get('/', function(req, res, next){
+    res.render('index', {
+                  title: TITLE, 
+                  subtitle: 'Front Page'
+    });
+})
+
+// router.get('/', function(req, res, next) {
+//   res.render('index', { title: 'Express' });
+// });
 
 router.get('/showbooks', async function(req, res, next) {
   let books = await handlebooks.getBooks({}, {sort: {title: 1}});
@@ -60,7 +68,7 @@ router.post('/showbookcopies', async function(req, res, next) {
 });
 
 router.get('/bookcopiesform/:bks', async function(req, res, next) {
-  let books = await handlebooks.getBookcopies({}, {sort: {title: 1}});
+  let books = await handlebooks.getBooks({}, {sort: {title: 1}});
   res.json(books);
 });
 
