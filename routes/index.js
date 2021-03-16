@@ -72,38 +72,19 @@ router.post('/bookcopiesform', function(req, res, next) {
   handlebookcopies.postBookcopies(req, res, next);
   res.redirect('/showbookcopies');
 });
+
+//Login 
+
+router.get('/login', function(req, res, next) {
+  res.render('login', { title: 'Login' });
+});
+router.post('/login', async function(req, res, next) {
+controllers.login(req)
+  .then( function (rc) {
+    if (!rc)
+      res.render('login', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes misery
+    else	
+      res.render('login', { title: 'Login', tf: "success",  returnCode: rc });
+  });
+});
 module.exports = router;
-
-/*router.post('/books', async function(req, res, next) {
-	models.putUser(req)
-		.then ( function (rc) {
-			if (!rc)
-				res.render('reguser', { title: 'Register User', returnCode: rc });
-			else	
-				res.redirect('/');
-		});
-});
-*/
-/* skal flyttes til users.js 
-router.get('/users', function(req, res, next) {
-  res.render('users', { title: 'Express' });
-});
-*/
-
-/*
-router.post("/books", function(req, res, next) {
-    modBooks.getBooks(res, req.body.ctry);
-});
-
-router.get('/bookData', function(req, res, next) {
-    res.render('bookData', {
-        title: 'Register Books',
-        subtitle: 'Enter Book Data'
-    });
-});
-router.post("/bookData", function(req, res, next) {
-    modBooks.postBooks(req, res, next);
-});
-*/
-
-

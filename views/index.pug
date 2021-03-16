@@ -2,13 +2,19 @@ extends layout
 
 block content
         h1= title
-        p Welcome to #{title}
-        if userarr
-                table()
-                        tr
-                                th User
-                                th Password
-                        //-     each user in userarr
-                        //- tr
-                        //-         td #{}
-                        //-         td #{}
+        if tf
+                        p= tf
+        else
+                form(id='reguser' action='/users/login' method='post')
+                        table
+                                tr
+                                        td UserId
+                                        td
+                                                input(type='text' name='uid' required)
+                                        td Password
+                                        td
+                                        td
+                                                input(type='text' name='password' required)
+                                        td
+                                        td
+                                                input(type='submit' value='Go')

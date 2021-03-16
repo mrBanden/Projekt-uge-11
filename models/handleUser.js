@@ -2,6 +2,8 @@
 
 const mon = require("./mongooseWrap");
 const User = require("./usersschema");
+const bcrypt = require('bcryptjs'); 
+
 const dbServer ='localhost';
 const dbName = "library";
 
@@ -28,6 +30,11 @@ exports.postUsers = async function (req) {
         middlename: req.body.middlename,
         lastname: req.body.lastname,
         newsletter: req.body.newsletter        
+    });
+    let myPlaintextPassword = {password: req.body.password};
+
+    bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+        console.log(hash);
     });
     
     try {
