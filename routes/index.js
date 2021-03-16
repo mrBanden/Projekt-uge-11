@@ -29,6 +29,8 @@ router.post('/showbooks', async function(req, res, next) {
   let books = await handlebooks.getBooks();
 });
 
+//User
+
 router.get('/showuser', async function(req, res, next) {
   let users = await handleuser.getUsers({}, {sort: {title: 1}});
   res.render('showuser', { title: TITLE, subtitle: 'Display User', users });

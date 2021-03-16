@@ -16,15 +16,14 @@ exports.getBookcopies = async function (que, sort) {
 }
 
 exports.postBookcopies = async function (req) {
-    let chk = { title: req.body.title };  // check object for existence
-    let bookcopies = new Book({                     // create object in db-format
+    let chk = { id: req.body.id };  // check object for existence
+    let bookcopy = new Bookcopy({                     // create object in db-format
         bookid: req.body.bookid,
-        id: req.body.id,     
+        id: req.body.id
     });
     
-    //if (req.body.localname === "") book.localname = book.name;
     try {
-        let cs = await mon.upsert("localhost", "library", Bookcopies, bookcopies, chk); //Ikke fjern book, den smider vores bøger i databasen
+        let cs = await mon.upsert("localhost", "library", Bookcopies, bookcopy, chk); //Ikke fjern bookcopies, den smider vores bøger i databasen
         return;
     } catch (e) {
         console.log(e);
