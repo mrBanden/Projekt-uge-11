@@ -31,11 +31,10 @@ exports.postUsers = async function (req) {
         lastname: req.body.lastname,
         newsletter: req.body.newsletter        
     });
-
-    let pwd = await bcrypt.hash(req.body.password, 10, function(err, hash) {
-        console.log(pwd);
-    });
-    
+    let pwd = await bcrypt.hash(req.body.password, 10);
+    console.log(pwd);
+    req.body.password = pwd;
+    console.log(req.body.password);
     try {
         let cs = await mon.upsert("localhost", "library", User, user, chk); // Tager fat i mongoose db
         return;
