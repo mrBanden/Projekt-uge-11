@@ -2,18 +2,11 @@ extends layout
 
 block content
 	h1= title
-	p Please write in the book id 
+	p Book id
 	form(id='reguser' action='/bookcopiesform' method='post')
-		table
-			tr
-				td Bookid
-				td
-					input(type='number' name='bookid' required)
-			tr
-				td Id
-				td
-					input(type='number' name='id' required)
-			tr
-				td
-				td
-					input(type='submit' value='Go')
+		div Select id of a book
+			select(name='bks')
+				each book in books
+					option #{books.id}
+		input(type='number' name='id' required)
+		input(type='submit' value='Go')

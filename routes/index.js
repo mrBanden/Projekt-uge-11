@@ -59,6 +59,11 @@ router.post('/showbookcopies', async function(req, res, next) {
   let bookcopies = await handlebookcopies.getBookcopies();
 });
 
+router.get('/bookcopiesform/:bks', async function(req, res, next) {
+  let books = await handlebooks.getBookcopies({}, {sort: {title: 1}});
+  res.json(books);
+});
+
 router.get('/bookcopiesform', function(req, res, next) {
   res.render('bookcopiesform', {title: TITLE, subtitle: 'Bookcopies form' });
 });

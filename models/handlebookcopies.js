@@ -17,13 +17,13 @@ exports.getBookcopies = async function (que, sort) {
 
 exports.postBookcopies = async function (req) {
     let chk = { id: req.body.id };  // check object for existence
-    let bookcopy = new Bookcopy({                     // create object in db-format
+    let bookcopies = new Bookcopy({                     // create object in db-format
         bookid: req.body.bookid,
         id: req.body.id
     });
     
     try {
-        let cs = await mon.upsert("localhost", "library", Bookcopies, bookcopy, chk); //Ikke fjern bookcopies, den smider vores bøger i databasen
+        let cs = await mon.upsert("localhost", "library", Bookcopies, bookcopies, chk); //Ikke fjern bookcopies, den smider vores bøger i databasen
         return;
     } catch (e) {
         console.log(e);
