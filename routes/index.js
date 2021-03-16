@@ -73,6 +73,13 @@ router.get('/logout', function(req, res, next){
   req.session.destroy();
   res.redirect('/');
 })
+
+//Reserve and loan books
+router.get('/', async function(req, res, next){
+  
+})
+
+
 /*Bookcopies
 router.get('/showbookcopies', async function(req, res, next) {
   let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
