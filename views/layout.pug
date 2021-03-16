@@ -10,20 +10,25 @@ html
           li
             a(href="/") Home
           li
-            a(href="/bookform") Register Books
-          li
             a(href="/showbooks") Show registered books
           li
             a(href="/userform") Register user
           li
-            a(href="/showuser") Show user
-          li
-            a(href="/bookcopiesform") Bookcopies register
-          li
-            a(href="/showbookcopies") Show bookcopies
-          li
-            a(href="/") Reservations
-          li
-            a(href="/") Loans
+              a(href="/bookform") Register Books
+          if authenticated
+            //- Hvis logged in
+            li
+              a(href="/showuser") Show user
+            li
+              a(href="/") Reservations
+            li
+              a(href="/") Loans
+          if !authenticated
+            //- if ! betyder if not
+            li 
+              a(href='/') Login
+          else
+            li 
+              a(href='/') Logout 
     main
       block content

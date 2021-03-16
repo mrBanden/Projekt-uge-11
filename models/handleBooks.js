@@ -3,6 +3,8 @@ const mon = require("./mongooseWrap");
 const Book = require("./booksschema");
 const dbServer = "localhost";
 const dbName = "library";
+const Bookcopy = require("./bookcopiesschema");
+
 
 exports.getBooks = async function (que, sort) {
     if (sort === null)
@@ -16,7 +18,62 @@ exports.getBooks = async function (que, sort) {
 }
 
 exports.postBooks = async function (req) {
-    let chk = { title: req.body.title };  // check object for existence
+   await mon.connect(); //mon = mongoose
+   const db = mon.conection;
+   db.once("open", function() {
+       console.log("connected to server by mongoose")
+   });
+
+   let author = {
+       firstname: req.body.firstname,
+       middlename: req.body.middlename,
+       lastname: req.body.lastname
+   };
+
+   let published = {
+       publisher: req.body.publisher,
+       place: req.body.place,
+       year: req.body.year
+   };
+
+   let book = new Book({
+       title: req.body.title,
+       authors: [author],
+       copyright: req.body.copyright,
+       edition: req.body.edition,
+       published: published
+   });
+   
+    Book.create(book, function(error, savedDocument) {  // Laver objekt med number of copies input(?)
+        if (error)
+            console.log(error);
+        let i = req.body.noofcopies;  // Number of copies of books
+        let arr = [];
+        while (i > 0) {
+            let bookcopy = new Bookcopy({
+                bookid: savedDocument._id
+            });
+            arr.push(bookcopy);
+            --i;
+        }
+        console.log(arr.length);
+    });
+   
+
+        //if (req.body.localname === "") book.localname = book.name;
+        try {
+            let cs = await mon.upsert("localhost", "library", Book, book);
+        //Ikke fjern book, den smider vores bøger i databasen
+            let bs = await mon.upsert("localhost", "library", Bookcopy, bookcopy);
+            return;
+        } catch (e) {
+            console.log(e);
+        }
+}
+
+
+
+    /* let chk = { title: req.body.title };  // check object for existence
     let book = new Book({                     // create object in db-format
         title: req.body.title,
         id: req.body.id,
@@ -28,13 +85,4 @@ exports.postBooks = async function (req) {
         publisher: req.body.publisher,
         year: req.body.year,
         place: req.body.place        
-    });
-    
-    //if (req.body.localname === "") book.localname = book.name;
-    try {
-        let cs = await mon.upsert("localhost", "library", Book, book, chk); //Ikke fjern book, den smider vores bøger i databasen
-        return;
-    } catch (e) {
-        console.log(e);
-    }
-}
+    }); */

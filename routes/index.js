@@ -57,7 +57,23 @@ router.post('/userform', function(req, res, next) {
   res.redirect('/showuser');
 });
 
-//Bookcopies
+// Login
+
+router.get('/login', function(req, res, next){
+  res.render('login', {title: TITLE, subtitle: 'Login'});
+});
+
+// router.post('/login', async function(req, res, next){
+//   if (await )
+// })
+
+//Logud
+
+router.get('/logout', function(req, res, next){
+  req.session.destroy();
+  res.redirect('/');
+})
+/*Bookcopies
 router.get('/showbookcopies', async function(req, res, next) {
   let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
   res.render('showbookcopies', { title: TITLE, subtitle: 'Display Copies', bookcopies});
@@ -79,20 +95,20 @@ router.get('/bookcopiesform', function(req, res, next) {
 router.post('/bookcopiesform', function(req, res, next) {
   handlebookcopies.postBookcopies(req, res, next);
   res.redirect('/showbookcopies');
-});
+});*/
 
 //Login 
 
-router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
-});
-router.post('/login', async function(req, res, next) {
-controllers.login(req)
-  .then( function (rc) {
-    if (!rc)
-      res.render('login', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes misery
-    else	
-      res.render('login', { title: 'Login', tf: "success",  returnCode: rc });
-  });
-});
+// router.get('/login', function(req, res, next) {
+//   res.render('login', { title: 'Login' });
+// });
+// router.post('/login', async function(req, res, next) {
+// controllers.login(req)
+//   .then( function (rc) {
+//     if (!rc)
+//       res.render('login', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes misery
+//     else	
+//       res.render('login', { title: 'Login', tf: "success",  returnCode: rc });
+//   });
+// });
 module.exports = router;
