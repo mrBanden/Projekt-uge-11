@@ -11,7 +11,7 @@ exports.getUsers = async function (que, sort) {
     if (sort === null)
         sort = {sort: {name: 1}};
     try {
-        let cs = await mon.retrieve(dbServer, dbName, User, que, sort);
+        let cs = await mon.retrieve(dbServer, dbName, User, que, sort); // await er asynkront og venter, til den får info
         return cs;
     } catch (e) {
         console.log(e);
@@ -31,14 +31,13 @@ exports.postUsers = async function (req) {
         lastname: req.body.lastname,
         newsletter: req.body.newsletter        
     });
-    let myPlaintextPassword = {password: req.body.password};
 
-    bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-        console.log(hash);
+    let pwd = await bcrypt.hash(req.body.password, 10, function(err, hash) {
+        console.log(pwd);
     });
     
     try {
-        let cs = await mon.upsert("localhost", "library", User, user, chk);
+        let cs = await mon.upsert("localhost", "library", User, user, chk); // Tager fat i mongoose db
         return;
     } catch (e) {
         console.log(e);
