@@ -4,13 +4,16 @@ const Book = require("./booksschema");
 const dbServer = "localhost";
 const dbName = "library";
 const Bookcopy = require("./bookcopiesschema");
+const mongoose = require("mongoose");
+const CONSTR = `mongodb://localhost:27017/${dbName}`;
+const CONPARAM = {useNewUrlParser:true, useUnifiedTopology: true};
 
 
 exports.getBooks = async function (que, sort) {
     if (sort === null)
         sort = {sort: {name: 1}};
     try {
-        let cs = await mon.retrieve(dbServer, dbName, Book, que, sort);
+        let cs = await mon.retrieve(dbServer, dbName, Book, que, sort); // mon kommer fra mongooseWrap
         return cs;
     } catch (e) {
         console.log(e);
@@ -18,8 +21,8 @@ exports.getBooks = async function (que, sort) {
 }
 
 exports.postBooks = async function (req) {
-   await mon.connect(); //mon = mongoose
-   const db = mon.conection;
+   await mongoose.connect(CONSTR, CONPARAM);
+   const db = mongoose.conection;
    db.once("open", function() {
        console.log("connected to server by mongoose")
    });
