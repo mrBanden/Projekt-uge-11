@@ -21,7 +21,12 @@ router.get('/', function(req, res, next){
 
 router.get('/showbooks', async function(req, res, next) {
   let books = await handlebooks.getBooks({}, {sort: {title: 1}});
+  let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
   res.render('showbooks', { title: TITLE, subtitle: 'Display Books', books });
+});
+
+router.post('/showbooks', async function(req, res, next) {
+  let books = await handlebooks.getBooks();
 });
 
 router.get('/bookform', function(req, res, next) {
@@ -33,9 +38,7 @@ router.post('/bookform', async function(req, res, next) {
   res.redirect('/showbooks');
 });
 
-router.post('/showbooks', async function(req, res, next) {
-  let books = await handlebooks.getBooks();
-});
+
 
 //User
 

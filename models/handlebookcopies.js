@@ -9,7 +9,6 @@ exports.getBookcopies = async function (que, sort) {
         sort = {sort: {name: 1}};
     try {
         let cs = await mon.retrieve(dbServer, dbName, Bookcopies, que, sort);
-        console.log(cs);
         return cs;
     } catch (e) {
         console.log(e);

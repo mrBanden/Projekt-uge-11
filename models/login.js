@@ -25,9 +25,9 @@ exports.getLogin = async function (que, sort) {
     try {
         /*let users = await mon.retrieve(dbServer, dbName, User, que, sort); // await er asynkront og venter, til den får info
 		console.log(users);*/
-		let uid = req.body.uid;
+
 		User.findOne({
-				id: uid
+				id: req.body.id
 		}).then(function(result){
 			userid = result;
 			console.log(userid.getInfo()); 
@@ -35,7 +35,7 @@ exports.getLogin = async function (que, sort) {
 		});
 		//console.log(userid);
 		//console.log(req.body.uid);
-		if (uid === userid) {
+		if (req.body.id === userid) {
 			success = await bcrypt.compare(req.body.password, user.password);
 			if (success) {
 				req.session.authenticated =true;
