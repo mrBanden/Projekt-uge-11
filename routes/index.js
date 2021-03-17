@@ -66,10 +66,10 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', async function(req, res, next) {
-login.getLogin(req)
+await login.getLogin(req)
   .then( function (rc) {
     if (!rc)
-      res.render('index', { title: 'Login', tf: "User not found", returnCode: rc }); // tf hvis bruger ikke findes = misery
+      res.render('index', { title: 'Login', tf: "Login failed", returnCode: rc }); // tf hvis bruger ikke findes = misery
     else	
       res.render('index', { title: 'Login', tf: "Logged in successfully",  returnCode: rc });
       //session her
