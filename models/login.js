@@ -10,7 +10,7 @@ const dbName = "library";
 // const UFILE = __dirname + '/../data/users.json';
 
 exports.getLogin = async function (que, sort) {
-	let succes = false;
+	let success = false;
     if (sort === null)
         sort = {sort: {name: 1}};
     try {
@@ -18,8 +18,8 @@ exports.getLogin = async function (que, sort) {
 
 	for (let user of users) {
 		if (req.body.uid === user.id) {
-			succes = await bcrypt.compare(req.body.password, user.password);
-			if (succes) {
+			success = await bcrypt.compare(req.body.password, user.password);
+			if (success) {
 				req.session.authenticated =true;
 				req.session.user = users[0].firstName;
 				} else {
