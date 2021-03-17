@@ -8,13 +8,12 @@ const login = require('../models/login');
 // Require til handlers m.m.
 
 //Get home page
-
 router.get('/', function(req, res, next){
     res.render('index', {
                   title: TITLE, 
-                  subtitle: 'Front Page'
-    });
-})
+                  subtitle: 'Front Page',
+                  authenticated: req.session && req.session.authenticated});
+});
 
 // router.get('/', function(req, res, next) {
 //   res.render('index', { title: 'Express' });
@@ -59,7 +58,6 @@ router.post('/userform', function(req, res, next) {
 });
 
 // Login
-
 router.get('/', function(req, res, next){
   res.render('login', {title: TITLE, subtitle: 'Login'});
 });
@@ -68,15 +66,14 @@ router.post('/', async function(req, res, next) {
 login.getLogin(req)
   .then( function (rc) {
     if (!rc)
-      res.render('index', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes = misery
+      res.render('index', { title: 'Login', tf: "User not found", returnCode: rc }); // tf hvis bruger ikke findes = misery
     else	
-      res.render('index', { title: 'Login', tf: "success",  returnCode: rc });
+      res.render('index', { title: 'Login', tf: "Logged in successfully",  returnCode: rc });
       //session her
   });
 });
 
 //Logud
-
 router.get('/', function(req, res, next){
   req.session.destroy();
   res.redirect('/');
@@ -84,7 +81,12 @@ router.get('/', function(req, res, next){
 
 //Reserve and loan books
 router.get('/', async function(req, res, next){
-  
+  let books = await handleBooks.getBooks({}, {sort: {title: 1}});
+  res.render('loan', {title: TITLE,subtitle: 'Display Books for Loan', books});
+});
+router.get('/', async function(req, res, next){
+  let books = await handleBooks.getBooks({}, {sort: {title: 1}});
+  res.render('', {title: TITLE, subtitle: 'Display Books for Reservation', books});
 })
 
 
