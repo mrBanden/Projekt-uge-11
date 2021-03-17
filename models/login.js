@@ -1,23 +1,35 @@
 'use strict';
+const mon = require("./mongooseWrap");
+const User = require("./usersschema");
 const bcrypt = require('bcryptjs'); 
-const fs = require('fs').promises;
+const session = require('express-session');
+
+const dbServer ='localhost';
+const dbName = "library";
+
 // const UFILE = __dirname + '/../data/users.json';
 
-module.exports = {
-	async login(req) {
-		let re = false;
-		try {
-			let data = await fs.readFile(UFILE);
-			let users = JSON.parse(data);
-			for (let user of users) {
-				if (req.body.uid === user.uid) {
-					re = await bcrypt.compare(req.body.password, user.password);
-					break;
+exports.getLogin = async function (que, sort) {
+	let succes = false;
+    if (sort === null)
+        sort = {sort: {name: 1}};
+    try {
+        let users = await mon.retrieve(dbServer, dbName, User, que, sort); // await er asynkront og venter, til den får info
+
+	for (let user of users) {
+		if (req.body.uid === user.id) {
+			succes = await bcrypt.compare(req.body.password, user.password);
+			if (succes) {
+				req.session.authenticated =true;
+				req.session.user = users[0].firstName;
+				} else {
+					req.session = undefined;
 				}
-			} 
-        } catch(e) {
-            console.log(e.message);
-        }
-        return re;
+				return success;
+			}
+		}
+	
+	}catch(e) {
+    console.log(e.message);
     }
-};
+}

@@ -22,7 +22,7 @@ exports.getBooks = async function (que, sort) {
 
 exports.postBooks = async function (req) {
    await mongoose.connect(CONSTR, CONPARAM);
-   const db = mongoose.conection;
+   const db = mongoose.connection;
    db.once("open", function() {
        console.log("connected to server by mongoose")
    });
@@ -50,7 +50,8 @@ exports.postBooks = async function (req) {
     Book.create(book, function(error, savedDocument) {  // Laver objekt med number of copies input(?)
         if (error)
             console.log(error);
-        let i = req.body.noofcopies;  // Number of copies of books
+        console.log(req.body);
+        let i = Number(req.body.noofcopies);  // Number of copies of books
         let arr = [];
         while (i > 0) {
             let bookcopy = new Bookcopy({
@@ -60,18 +61,12 @@ exports.postBooks = async function (req) {
             --i;
         }
         console.log(arr.length);
+        let cs = Bookcopy.create(arr, function(err, cops) {
+            if (err) {
+                console.log(err);
+            } db.close();
+        })
     });
-   
-
-        //if (req.body.localname === "") book.localname = book.name;
-        try {
-            let cs = await mon.upsert("localhost", "library", Book, book);
-        //Ikke fjern book, den smider vores bøger i databasen
-            let bs = await mon.upsert("localhost", "library", Bookcopy, bookcopy);
-            return;
-        } catch (e) {
-            console.log(e);
-        }
 }
 
 

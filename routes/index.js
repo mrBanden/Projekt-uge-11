@@ -4,7 +4,8 @@ const TITLE = 'Library Project';
 const handlebooks = require('../models/handleBooks');
 const handleuser = require('../models/handleUser');
 const handlebookcopies = require('../models/handlebookcopies');
-// Require til handler
+const login = require('../models/login');
+// Require til handlers m.m.
 
 //Get home page
 
@@ -28,8 +29,8 @@ router.get('/bookform', function(req, res, next) {
   res.render('bookform', {title: TITLE, subtitle: 'Book Entry Form' });
 });
 
-router.post('/bookform', function(req, res, next) {
-  handlebooks.postBooks(req, res, next);
+router.post('/bookform', async function(req, res, next) {
+  await handlebooks.postBooks(req, res, next);
   res.redirect('/showbooks');
 });
 
@@ -59,17 +60,24 @@ router.post('/userform', function(req, res, next) {
 
 // Login
 
-router.get('/login', function(req, res, next){
+router.get('/', function(req, res, next){
   res.render('login', {title: TITLE, subtitle: 'Login'});
 });
 
-// router.post('/login', async function(req, res, next){
-//   if (await )
-// })
+router.post('/', async function(req, res, next) {
+login.getLogin(req)
+  .then( function (rc) {
+    if (!rc)
+      res.render('index', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes = misery
+    else	
+      res.render('index', { title: 'Login', tf: "success",  returnCode: rc });
+      //session her
+  });
+});
 
 //Logud
 
-router.get('/logout', function(req, res, next){
+router.get('/', function(req, res, next){
   req.session.destroy();
   res.redirect('/');
 })
@@ -104,18 +112,4 @@ router.post('/bookcopiesform', function(req, res, next) {
   res.redirect('/showbookcopies');
 });*/
 
-//Login 
-
-// router.get('/login', function(req, res, next) {
-//   res.render('login', { title: 'Login' });
-// });
-// router.post('/login', async function(req, res, next) {
-// controllers.login(req)
-//   .then( function (rc) {
-//     if (!rc)
-//       res.render('login', { title: 'Login', tf: "misery", returnCode: rc }); // tf hvis bruger ikke findes misery
-//     else	
-//       res.render('login', { title: 'Login', tf: "success",  returnCode: rc });
-//   });
-// });
 module.exports = router;
