@@ -1,15 +1,25 @@
 "use strict";
-import {$} from ".modules/nQuery.js";
+import {$} from "./nQuery.js";
+import {Ajax} from "./Ajax.js";
 
-const loans = require('../models/Loan');
+// const loans = require('../models/Loan');
 
-function showStarter () {
-console.log("you found me!");
-let loanme = $("loanme");
-loanme.addEventListener("click", postLoans);
+const postloans = function(ev) {
+    let req = new Ajax();
+    req.getFile(`/Loan/${ev.target.value}`, postLoans);
 
+const showStarter = function () {
+    if ($('loanme'))
+    $('loanme').addEventListener('click', postloans);
 }
 
+window.addEventListener("load", showStarter);
+
+// function showStarter () {
+// let loanme = document.getElementById("loanme");
+// loanme.addEventListener("click", postLoans);
+// }
 
 
-window.addEventListener("load", showStarter);  
+
+// window.addEventListener("load", showStarter);  
