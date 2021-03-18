@@ -32,7 +32,8 @@ exports.postLoans = async function (req) {
    await mongoose.connect(CONSTR, CONPARAM);
    const db = mongoose.connection;
    db.once("open", function() {
-       console.log("connected to server by mongoose")
+       console.log("connected to server by butt")
+       
    });
    console.log("hello");
    //her skal vi poste den lånte bog til loans databasen, lånerens id fra persons og et timestamp
