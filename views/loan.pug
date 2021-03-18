@@ -1,0 +1,18 @@
+extends layout 
+
+block content
+        h2 = subtitle
+        table.disp 
+            tr 
+                th Title 
+                th Author
+                th Publisher
+                th Year
+            each book in loanable
+                tr 
+                    td #{book.title}
+                    td #{book.authors[0].firstname} #{book.authors[0].lastname}
+                    td #{book.published.publisher}
+                    td #{book.published.year}
+                    td Loan book 
+                        a(href='/laan?book._id')

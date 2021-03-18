@@ -30,15 +30,14 @@ exports.getLogin = async function (req) {
 		let users = await User.find({
 				email: req.body.email
 		},null,{});
-		let user = users[0]; //vigtigt
+		let user = users[0]; //find returnerer array, derfor bruger vi et index
 
-		console.log(`abc: ${user}`);
-		//console.log(req.body.uid);
+		//console.log(`abc: ${user}`);
 		
 			success = await bcrypt.compare(req.body.password, user.password);
 			if (success) {
-				req.session.authenticated =true;
-				req.session.user = user.firstName;
+				req.session.authenticated = true;
+				//req.session.user = user.firstName;
 			} else {
 				req.session.destroy(); //Kan bruges til logout
 			}

@@ -13,22 +13,22 @@ html
             a(href="/showbooks") Show registered books
           li
             a(href="/userform") Register user
-          li
-              a(href="/bookform") Register Books
           if authenticated
             //- Hvis logged in
             li
+              a(href="/bookform") Register Books
+            li
               a(href="/showuser") Show user
             li
-              a(href="/") Reservations
+              a(href="/reservation") Reservations
             li
-              a(href="/") Loans
+              a(href="/loan") Loans
           if !authenticated
             //- if ! betyder if not
             li 
               a(href='/') Login
           else
             li 
-              a(href='/') Logout 
+              a(href='/logout') Logout 
     main
       block content
