@@ -90,7 +90,7 @@ router.post('/', async function(req, res, next) {
 await login.getLogin(req)
   .then( function (rc) {
     if (!rc)
-      res.render('index', { title: 'Login', tf: "Login failed", returnCode: rc }); // tf hvis bruger ikke findes
+      res.render('index', { title: 'Login', tf: "Login failed", returnCode: rc });// tf hvis bruger ikke findes
     else	
       res.render('index', { title: 'Login', tf: "Logged in successfully", 
       authenticated: req.session && req.session.authenticated, returnCode: rc });

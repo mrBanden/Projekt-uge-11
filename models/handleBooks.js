@@ -41,7 +41,7 @@ exports.postBooks = async function (req) {
 
    let book = new Book({
        title: req.body.title,
-       authors: [author],
+       authors: author,
        copyright: req.body.copyright,
        edition: req.body.edition,
        published: published
@@ -61,7 +61,7 @@ exports.postBooks = async function (req) {
             --i;
         }
         console.log(arr.length);
-        let cs = Bookcopy.create(arr, function(err, cops) {
+        let cs = Bookcopy.create(arr, function(err, cops) { // create er en mongoose function der bruges sammen med et skema. Skemaet fortæller hvordan det skal struktureres.
             if (err) {
                 console.log(err);
             } db.close();
