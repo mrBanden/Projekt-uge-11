@@ -8,14 +8,15 @@ const login = require('../models/login');
 const loans = require('../models/Loan');
 const reserve = require('../models/Reservation');
 const session = require('express-session');
+//const page = require('../public/javascript/page');
 // Require til handlers m.m.
 
 //Get home page
 router.get('/', function(req, res, next){
     res.render('index', {
-                                      title: TITLE, 
-                                      subtitle: 'Front Page',
-                                      authenticated: req.session && req.session.authenticated});
+      title: TITLE, 
+      subtitle: 'Front Page',
+      authenticated: req.session && req.session.authenticated});
 });
 
 // router.get('/', function(req, res, next) {
@@ -27,10 +28,10 @@ router.get('/showbooks', async function(req, res, next) {
   let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
   
   res.render('showbooks', { 
-                                                title: TITLE, 
-                                                subtitle: 'Display Books', 
-                                                authenticated: req.session && req.session.authenticated,
-                                                books, bookcopies });
+    title: TITLE, 
+    subtitle: 'Display Books', 
+    authenticated: req.session && req.session.authenticated,
+    books, bookcopies });
 });
 
 router.post('/showbooks', async function(req, res, next) {
@@ -39,9 +40,9 @@ router.post('/showbooks', async function(req, res, next) {
 
 router.get('/bookform', function(req, res, next) {
   res.render('bookform', { 
-                                              title: TITLE, 
-                                              subtitle: 'Book Entry Form',
-                                              authenticated: req.session && req.session.authenticated });
+    title: TITLE, 
+    subtitle: 'Book Entry Form',
+    authenticated: req.session && req.session.authenticated });
 });
 
 router.post('/bookform', async function(req, res, next) {
@@ -56,10 +57,10 @@ router.post('/bookform', async function(req, res, next) {
 router.get('/showuser', async function(req, res, next) {
   let users = await handleuser.getUsers({}, {sort: {title: 1}});
   res.render('showuser', { 
-                                              title: TITLE,
-                                              subtitle: 'Display User',
-                                              authenticated: req.session && req.session.authenticated,
-                                               users });
+    title: TITLE,
+    subtitle: 'Display User',
+    authenticated: req.session && req.session.authenticated,
+    users });
 });
 
 router.post('/showuser', async function(req, res, next) {
@@ -68,9 +69,9 @@ router.post('/showuser', async function(req, res, next) {
 
 router.get('/userform', function(req, res, next) {
   res.render('userform', {
-                                            title: TITLE,
-                                            subtitle: 'User form',
-                                            authenticated: req.session && req.session.authenticated });
+    title: TITLE,
+    subtitle: 'User form',
+    authenticated: req.session && req.session.authenticated });
 });
 
 router.post('/userform', function(req, res, next) {
@@ -81,9 +82,9 @@ router.post('/userform', function(req, res, next) {
 // Login
 router.get('/', function(req, res, next){
   res.render('login', {
-                                    title: TITLE,
-                                    subtitle: 'Login',
-                                    authenticated: req.session && req.session.authenticated});
+      title: TITLE,
+      subtitle: 'Login',
+      authenticated: req.session && req.session.authenticated});
 });
 
 router.post('/', async function(req, res, next) {
@@ -101,19 +102,21 @@ await login.getLogin(req)
 router.get('/logout', function(req, res, next){
   req.session.destroy();
   res.render('logout');
-})
+});
+
+// router.get('public/javascripts/page', function(req, res, next){
+// })
 
 //Reserve and loan books
 router.get('/loan', async function(req, res, next){
   let loanable = await loans.getBooksWithUnloanedCopies();
   let books = await handlebooks.getBooks();
-  let loanme = document.getElementById("loanme");
-  loanme.addEventListener("click", postLoans);
+
   res.render('loan', {
-                                    title: TITLE,
-                                    subtitle: 'Display Books for Loan', 
-                                    authenticated: req.session && req.session.authenticated,
-                                    books});
+    title: TITLE,
+    subtitle: 'Display Books for Loan', 
+    authenticated: req.session && req.session.authenticated,
+    books});
 });
 
 //post loans router her
@@ -125,10 +128,10 @@ router.post('/loan', function(req, res, next) {
 router.get('/reserve', async function(req, res, next){
   let reservable = await handleBooks.getBooksWithAllLoanedCopies();
   res.render('reserve', {
-                                        title: TITLE,
-                                        subtitle: 'Display Books for Reservation',
-                                        authenticated: req.session && req.session.authenticated,
-                                       reservable});
+    title: TITLE,
+    subtitle: 'Display Books for Reservation',
+    authenticated: req.session && req.session.authenticated,
+    reservable});
 });
 
 
