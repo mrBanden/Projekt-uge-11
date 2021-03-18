@@ -5,8 +5,8 @@ const handlebooks = require('../models/handleBooks');
 const handleuser = require('../models/handleUser');
 const handlebookcopies = require('../models/handlebookcopies');
 const login = require('../models/login');
-const loanable = require('../models/Loan');
-const reservable = require('../models/Reservation');
+const loans = require('../models/Loan');
+const reserve = require('../models/Reservation');
 const session = require('express-session');
 // Require til handlers m.m.
 
@@ -92,7 +92,8 @@ await login.getLogin(req)
     if (!rc)
       res.render('index', { title: 'Login', tf: "Login failed", returnCode: rc }); // tf hvis bruger ikke findes
     else	
-      res.render('index', { title: 'Login', tf: "Logged in successfully", authenticated: req.session && req.session.authenticated, returnCode: rc });
+      res.render('index', { title: 'Login', tf: "Logged in successfully", 
+      authenticated: req.session && req.session.authenticated, returnCode: rc });
       });
 });
 
@@ -104,13 +105,23 @@ router.get('/logout', function(req, res, next){
 
 //Reserve and loan books
 router.get('/loan', async function(req, res, next){
-  let loanable = await handleBooks.getBooksWithUnloanedCopies();
+  let loanable = await loans.getBooksWithUnloanedCopies();
+  let books = await handlebooks.getBooks();
+  let loanme = document.getElementById("loanme");
+  loanme.addEventListener("click", postLoans);
   res.render('loan', {
                                     title: TITLE,
                                     subtitle: 'Display Books for Loan', 
                                     authenticated: req.session && req.session.authenticated,
                                     books});
 });
+
+//post loans router her
+router.post('/loan', function(req, res, next) {
+  loans.postLoans(req, res, next);
+  res.redirect('/loan');
+});
+
 router.get('/reserve', async function(req, res, next){
   let reservable = await handleBooks.getBooksWithAllLoanedCopies();
   res.render('reserve', {
