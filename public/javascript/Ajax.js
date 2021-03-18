@@ -6,7 +6,7 @@
  */
 export class Ajax {
     constructor() {
-        this.ajaxobj = false;
+        this.ajaxobjn = false;
         try {
             this.ajaxobj = new XMLHttpRequest();
         } catch(err) {

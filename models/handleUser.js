@@ -21,7 +21,6 @@ exports.getUsers = async function (que, sort) {
 exports.postUsers = async function (req) {
     let chk = { id: req.body.id };  // check object for existence
     let user = new User({                     // create object in db-format
-        id: req.body.id,
         password: req.body.password,
         cpr: req.body.cpr,
         currentpenalties: req.body.currentpenalties,

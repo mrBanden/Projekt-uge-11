@@ -29,7 +29,7 @@ exports.getBooksWithUnloanedCopies = async function (que, sort) {
 }
 
 exports.postLoans = async function (req) {
-   await mongoose.connect(CONSTR, CONPARAM);
+   await mongoose.connect(CONSTR, CONPARAM); //constr er både url og databasenavn. conparam er nogle options du kan sætte på.
    const db = mongoose.connection;
    db.once("open", function() {
        console.log("connected to server by butt")
