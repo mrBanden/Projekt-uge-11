@@ -25,13 +25,12 @@ router.get('/', function(req, res, next){
 
 router.get('/showbooks', async function(req, res, next) {
   let books = await handlebooks.getBooks({}, {sort: {title: 1}});
-  let bookcopies = await handlebookcopies.getBookcopies({}, {sort: {title: 1}});
   
   res.render('showbooks', { 
     title: TITLE, 
     subtitle: 'Display Books', 
     authenticated: req.session && req.session.authenticated,
-    books, bookcopies });
+    books});
 });
 
 router.post('/showbooks', async function(req, res, next) {
