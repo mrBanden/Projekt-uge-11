@@ -23,7 +23,6 @@ exports.postUsers = async function (req) {
     let user = new User({                     // create object in db-format
         password: req.body.password,
         cpr: req.body.cpr,
-        currentpenalties: req.body.currentpenalties,
         email: req.body.email,
         firstname: req.body.firstname,
         middlename: req.body.middlename,
